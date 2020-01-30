@@ -529,11 +529,7 @@ int uv_run(uv_loop_t *loop, uv_run_mode mode) {
     if ((mode == UV_RUN_ONCE && !ran_pending) || mode == UV_RUN_DEFAULT)
       timeout = uv_backend_timeout(loop);
 
-    if (pGetQueuedCompletionStatusEx)
-      uv__poll(loop, timeout);
-    else
-      uv__poll_wine(loop, timeout);
-
+    uv__poll_wine(loop, timeout);
 
     uv_check_invoke(loop);
     uv_process_endgames(loop);

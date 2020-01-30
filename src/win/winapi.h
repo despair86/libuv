@@ -4674,6 +4674,9 @@ typedef BOOL (WINAPI *sGetQueuedCompletionStatusEx)
               DWORD dwMilliseconds,
               BOOL fAlertable);
 
+typedef DWORD (FAR PASCAL *sGetAdaptersAddresses)
+              (ULONG, DWORD, VOID*, VOID*, ULONG*);
+
 /* from powerbase.h */
 #ifndef DEVICE_NOTIFY_CALLBACK
 # define DEVICE_NOTIFY_CALLBACK 2

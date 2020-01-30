@@ -45,12 +45,17 @@ sPowerRegisterSuspendResumeNotification pPowerRegisterSuspendResumeNotification;
 /* User32.dll function pointer */
 sSetWinEventHook pSetWinEventHook;
 
+/* ip helper api */
+sGetAdaptersAddresses pGetAdaptersAddresses;
+
 
 void uv_winapi_init(void) {
   HMODULE ntdll_module;
   HMODULE powrprof_module;
   HMODULE user32_module;
   HMODULE kernel32_module;
+  HMODULE advapi32_module;
+  HMODULE iphlpapi_mod;
 
   ntdll_module = GetModuleHandleA("ntdll.dll");
   if (ntdll_module == NULL) {
@@ -134,4 +139,18 @@ void uv_winapi_init(void) {
     pSetWinEventHook = (sSetWinEventHook)
       GetProcAddress(user32_module, "SetWinEventHook");
   }
+
+  advapi32_module = GetModuleHandleA("advapi32.dll");
+  if (advapi32_module == NULL) {
+    uv_fatal_error(GetLastError(), "GetModuleHandleA");
+  }
+
+  iphlpapi_mod = GetModuleHandleA("iphlpapi.dll");
+  if (iphlpapi_mod != NULL) {
+    pGetAdaptersAddresses = (sGetAdaptersAddresses)
+      GetProcAddress(iphlpapi_mod, "GetAdaptersAddresses");
+  }
+
+  pRtlGenRandom =
+      (sRtlGenRandom) GetProcAddress(advapi32_module, "SystemFunction036");
 }
