@@ -662,7 +662,7 @@ void fs__open(uv_fs_t* req) {
       CloseHandle(file);
       return;
     }
-    fd_info.is_directory = _s.st_mode & _S_IFDIR;
+    fd_info.is_directory = (BOOLEAN)(_s.st_mode & _S_IFDIR);
 
     if (fd_info.is_directory) {
       fd_info.size.QuadPart = 0;
