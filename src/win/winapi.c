@@ -132,6 +132,11 @@ void uv_winapi_init(void) {
     uv_fatal_error(GetLastError(), "GetModuleHandleA");
   }
 
+  kernel32_module = GetModuleHandleA("kernel32.dll");
+  if (kernel32_module == NULL) {
+    uv_fatal_error(GetLastError(), "GetModuleHandleA");
+  }
+
   pGetQueuedCompletionStatusEx = (sGetQueuedCompletionStatusEx) GetProcAddress(
       kernel32_module,
       "GetQueuedCompletionStatusEx");

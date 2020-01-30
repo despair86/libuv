@@ -4788,6 +4788,14 @@ extern sWakeConditionVariable pWakeConditionVariable;
 extern sGetFinalPathNameByHandleW pGetFinalPathNameByHandleW;
 
 
+
+/* Kernel32 function pointers */
+extern sGetQueuedCompletionStatusEx pGetQueuedCompletionStatusEx;
+extern sSetFileCompletionNotificationModes pSetFileCompletionNotificationModes;
+extern sCreateSymbolicLinkW pCreateSymbolicLinkW;
+extern sGetFinalPathNameByHandleW pGetFinalPathNameByHandleW;
+
+
 /* Powrprof.dll function pointer */
 extern sPowerRegisterSuspendResumeNotification pPowerRegisterSuspendResumeNotification;
 
