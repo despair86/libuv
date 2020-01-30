@@ -38,6 +38,14 @@ sNtQueryInformationProcess pNtQueryInformationProcess;
 
 /* Kernel32 function pointers */
 sGetQueuedCompletionStatusEx pGetQueuedCompletionStatusEx;
+sSetFileCompletionNotificationModes pSetFileCompletionNotificationModes;
+sCreateSymbolicLinkW pCreateSymbolicLinkW;
+sInitializeConditionVariable pInitializeConditionVariable;
+sSleepConditionVariableCS pSleepConditionVariableCS;
+sSleepConditionVariableSRW pSleepConditionVariableSRW;
+sWakeAllConditionVariable pWakeAllConditionVariable;
+sWakeConditionVariable pWakeConditionVariable;
+sGetFinalPathNameByHandleW pGetFinalPathNameByHandleW;
 
 /* Powrprof.dll function pointer */
 sPowerRegisterSuspendResumeNotification pPowerRegisterSuspendResumeNotification;
@@ -127,6 +135,31 @@ void uv_winapi_init(void) {
   pGetQueuedCompletionStatusEx = (sGetQueuedCompletionStatusEx) GetProcAddress(
       kernel32_module,
       "GetQueuedCompletionStatusEx");
+
+  pSetFileCompletionNotificationModes = (sSetFileCompletionNotificationModes)
+    GetProcAddress(kernel32_module, "SetFileCompletionNotificationModes");
+
+  pCreateSymbolicLinkW = (sCreateSymbolicLinkW)
+    GetProcAddress(kernel32_module, "CreateSymbolicLinkW");
+
+  pInitializeConditionVariable = (sInitializeConditionVariable)
+    GetProcAddress(kernel32_module, "InitializeConditionVariable");
+
+  pSleepConditionVariableCS = (sSleepConditionVariableCS)
+    GetProcAddress(kernel32_module, "SleepConditionVariableCS");
+
+  pSleepConditionVariableSRW = (sSleepConditionVariableSRW)
+    GetProcAddress(kernel32_module, "SleepConditionVariableSRW");
+
+  pWakeAllConditionVariable = (sWakeAllConditionVariable)
+    GetProcAddress(kernel32_module, "WakeAllConditionVariable");
+
+  pWakeConditionVariable = (sWakeConditionVariable)
+    GetProcAddress(kernel32_module, "WakeConditionVariable");
+
+  pGetFinalPathNameByHandleW = (sGetFinalPathNameByHandleW)
+    GetProcAddress(kernel32_module, "GetFinalPathNameByHandleW");
+
 
   powrprof_module = LoadLibraryA("powrprof.dll");
   if (powrprof_module != NULL) {
