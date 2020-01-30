@@ -272,9 +272,8 @@ $ gdb --args build/uv_run_tests_a TEST_NAME
 
 Use the `--trace-children=yes` parameter:
 
-```bash
-$ valgrind --trace-children=yes -v --tool=memcheck --leak-check=full --track-origins=yes --leak-resolution=high --show-reachable=yes --log-file=memcheck-%p.log build/uv_run_tests_a TEST_NAME
-```
+Microsoft Windows operating systems since Windows XP SP2. It can be built
+with either Visual Studio 2015 or MinGW.
 
 ### Running benchmarks
 
