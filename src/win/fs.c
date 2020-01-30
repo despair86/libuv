@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <io.h>
 #include <limits.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/utime.h>
 #include <stdio.h>
@@ -655,16 +656,13 @@ void fs__open(uv_fs_t* req) {
   }
 
   if (flags & UV_FS_O_FILEMAP) {
-    FILE_STANDARD_INFO file_info;
-    if (!GetFileInformationByHandleEx(file,
-                                      FileStandardInfo,
-                                      &file_info,
-                                      sizeof file_info)) {
+    struct stat _s;
+    if (fstat(fd, &_s)) {
       SET_REQ_WIN32_ERROR(req, GetLastError());
       CloseHandle(file);
       return;
     }
-    fd_info.is_directory = file_info.Directory;
+    fd_info.is_directory = _s.st_mode & _S_IFDIR;
 
     if (fd_info.is_directory) {
       fd_info.size.QuadPart = 0;
