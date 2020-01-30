@@ -2169,7 +2169,10 @@ static void fs__fchmod(uv_fs_t* req) {
 
   VERIFY_FD(fd, req);
 
-  handle = ReOpenFile(uv__get_osfhandle(fd), FILE_WRITE_ATTRIBUTES, 0, 0);
+  //handle = ReOpenFile(uv__get_osfhandle(fd), FILE_WRITE_ATTRIBUTES, 0, 0);
+  handle = INVALID_HANDLE_VALUE;
+  DuplicateHandle(GetCurrentProcess(), uv__get_osfhandle(fd), GetCurrentProcess(), 
+  &handle, FILE_GENERIC_WRITE, 0,0);
   if (handle == INVALID_HANDLE_VALUE) {
     SET_REQ_WIN32_ERROR(req, GetLastError());
     return;
