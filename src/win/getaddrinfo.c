@@ -30,6 +30,10 @@
 #include <winsock2.h>
 
 /* Needed for ConvertInterfaceIndexToLuid and ConvertInterfaceLuidToNameA */
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#define _WIN32_WINNT 0x600
+#endif
 #include <iphlpapi.h>
 
 int uv__getaddrinfo_translate_error(int sys_err) {
