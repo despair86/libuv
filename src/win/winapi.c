@@ -36,6 +36,9 @@ sNtQueryDirectoryFile pNtQueryDirectoryFile;
 sNtQuerySystemInformation pNtQuerySystemInformation;
 sNtQueryInformationProcess pNtQueryInformationProcess;
 
+/* Advapi32 function pointers */
+sRtlGenRandom pRtlGenRandom;
+
 /* Kernel32 function pointers */
 sGetQueuedCompletionStatusEx pGetQueuedCompletionStatusEx;
 sSetFileCompletionNotificationModes pSetFileCompletionNotificationModes;
