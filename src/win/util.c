@@ -1957,7 +1957,15 @@ int uv_gettimeofday(uv_timeval64_t* tv) {
 
 int uv__random_rtlgenrandom(void* buf, size_t buflen) {
   if (pRtlGenRandom == NULL)
-    return UV_ENOSYS;
+  {
+  	HCRYPTPROV hprovider = 0;
+	CryptAcquireContext(&hprovider, NULL, NULL, PROV_RSA_FULL,CRYPT_VERIFYCONTEXT | CRYPT_SILENT);
+	BOOL r = CryptGenRandom(hprovider, buflen, (BYTE*)buf);
+    CryptReleaseContext(hprovider, 0);
+    if (r == FALSE)
+      return UV_EIO;
+  }
+    //return UV_ENOSYS;
 
   if (buflen == 0)
     return 0;
